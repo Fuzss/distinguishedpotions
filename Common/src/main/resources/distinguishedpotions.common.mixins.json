@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "package": "fuzs.distinguishedpotions.mixin",
+  "refmap": "distinguishedpotions.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "client.PotionItemMixin",
+    "client.PotionUtilsMixin",
+    "client.TippedArrowItemMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
