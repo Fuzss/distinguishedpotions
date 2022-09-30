@@ -44,7 +44,13 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
         context.register(item, (Font font, ItemStack stack, int itemPosX, int itemPosY, float blitOffset) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).effectAmplifierBar) return false;
             if (item == Items.TIPPED_ARROW && !DistinguishedPotions.CONFIG.get(ClientConfig.class).applyToTippedArrows) return false;
-            return PotionDecorationsHandler.renderPotionDecorations(stack, itemPosX, itemPosY);
+            if (PotionDecorationsHandler.renderPotionDecorations(stack, itemPosX, itemPosY)) {
+                if (DistinguishedPotions.CONFIG.get(ClientConfig.class).drawAmplifierBarBehindStackCount) {
+                    PotionDecorationsHandler.renderPotionStackSize(font, stack, itemPosX, itemPosY, blitOffset);
+                }
+                return true;
+            }
+            return false;
         });
     }
 }

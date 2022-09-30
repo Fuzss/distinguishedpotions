@@ -16,4 +16,6 @@ public class ClientConfig implements ConfigCore {
     public boolean coloredSimplePotions = true;
     @Config(description = "Apply all changes to tipped arrows, too.")
     public boolean applyToTippedArrows = true;
+    @Config(description = "Draw the item stack count above the effect amplifier bar. Otherwise the bar is drawn last and may cover parts of the stack count.")
+    public boolean drawAmplifierBarBehindStackCount = true;
 }
