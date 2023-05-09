@@ -25,7 +25,7 @@ abstract class PotionItemMixin extends Item {
     }
 
     @Inject(method = "isFoil", at = @At("HEAD"), cancellable = true)
-    public void isFoil$Inject$Head(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
+    public void isFoil(ItemStack stack, CallbackInfoReturnable<Boolean> callback) {
         if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).removePotionGlint) return;
         callback.setReturnValue(super.isFoil(stack));
     }

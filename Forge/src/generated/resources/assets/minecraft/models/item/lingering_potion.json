@@ -2,13 +2,13 @@
   "parent": "minecraft:item/generated",
   "overrides": [
     {
-      "model": "distinguishedpotions:item/strong_lingering_potion_overlay",
+      "model": "distinguishedpotions:item/strong_lingering_potion",
       "predicate": {
         "distinguishedpotions:strong": 1.0
       }
     },
     {
-      "model": "distinguishedpotions:item/long_lingering_potion_overlay",
+      "model": "distinguishedpotions:item/long_lingering_potion",
       "predicate": {
         "distinguishedpotions:long": 1.0
       }

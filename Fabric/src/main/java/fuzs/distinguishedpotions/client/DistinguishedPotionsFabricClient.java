@@ -1,13 +1,13 @@
 package fuzs.distinguishedpotions.client;
 
 import fuzs.distinguishedpotions.DistinguishedPotions;
-import fuzs.puzzleslib.client.core.ClientCoreServices;
+import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import net.fabricmc.api.ClientModInitializer;
 
 public class DistinguishedPotionsFabricClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientCoreServices.FACTORIES.clientModConstructor(DistinguishedPotions.MOD_ID).accept(new DistinguishedPotionsClient());
+        ClientModConstructor.construct(DistinguishedPotions.MOD_ID, DistinguishedPotionsClient::new);
     }
 }
