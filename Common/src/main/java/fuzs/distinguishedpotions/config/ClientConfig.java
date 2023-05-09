@@ -20,9 +20,9 @@ public class ClientConfig implements ConfigCore {
     public boolean extendedPotionNames = true;
     @Config(description = "Draw the item stack count above the effect amplifier bar. Otherwise the bar is drawn last and may cover parts of the stack count.")
     public boolean drawAmplifierBarBehindStackCount = true;
-    @Config(name = "strong_potions", description = "Potion types to be recognized as strong potions for providing alternate item textures.")
+    @Config(name = "strong_potions", description = {"Potion types to be recognized as strong potions for providing alternate item textures.", ConfigDataSet.CONFIG_DESCRIPTION})
     List<String> strongPotionsRaw = Lists.newArrayList("*:strong_*");
-    @Config(name = "long_potions", description = "Potion types to be recognized as long potions for providing alternate item textures.")
+    @Config(name = "long_potions", description = {"Potion types to be recognized as long potions for providing alternate item textures.", ConfigDataSet.CONFIG_DESCRIPTION})
     List<String> longPotionsRaw = Lists.newArrayList("*:long_*");
 
     public ConfigDataSet<Potion> strongPotions;
