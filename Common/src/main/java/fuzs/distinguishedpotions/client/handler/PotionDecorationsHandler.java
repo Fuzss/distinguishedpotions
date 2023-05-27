@@ -20,8 +20,6 @@ public class PotionDecorationsHandler {
         int dotCount = mobEffects.stream().mapToInt(MobEffectInstance::getAmplifier).map(i1 -> i1 + 1).sum();
         if (dotCount == 0) return false;
         RenderSystem.disableDepthTest();
-        RenderSystem.disableTexture();
-        RenderSystem.disableBlend();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         fillRect(bufferBuilder, itemPosX + 3, itemPosY + 13, 11, 2, 0, 0, 0, 255);
@@ -29,6 +27,7 @@ public class PotionDecorationsHandler {
             int color = POTION_AMPLIFIER_COLORS[Math.min((dotCount - i - 1) / 4, POTION_AMPLIFIER_COLORS.length - 1)].getColor();
             fillRect(bufferBuilder, itemPosX + 3 + 3 * i, itemPosY + 13, 2, 2, color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF, 0xFF);
         }
+        RenderSystem.enableDepthTest();
         return true;
     }
 
@@ -42,14 +41,13 @@ public class PotionDecorationsHandler {
         BufferUploader.drawWithShader(renderer.end());
     }
 
-    public static boolean renderPotionStackSize(Font font, ItemStack stack, int itemPosX, int itemPosY, float blitOffset) {
+    public static boolean renderPotionStackSize(PoseStack poseStack, Font font, ItemStack stack, int itemPosX, int itemPosY) {
         // copied from vanilla ItemRenderer to draw stack count above effect amplifier bar
-        PoseStack poseStack = new PoseStack();
         if (stack.getCount() != 1) {
             String string = String.valueOf(stack.getCount());
-            poseStack.translate(0.0, 0.0, blitOffset + 200.0F);
+            poseStack.translate(0.0, 0.0, 200.0F);
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-            font.drawInBatch(string, itemPosX + 19 - 2 - font.width(string), itemPosY + 6 + 3, 16777215, true, poseStack.last().pose(), bufferSource, false, 0, 15728880);
+            font.drawInBatch(string, itemPosX + 19 - 2 - font.width(string), itemPosY + 6 + 3, 16777215, true, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             bufferSource.endBatch();
             return true;
         }

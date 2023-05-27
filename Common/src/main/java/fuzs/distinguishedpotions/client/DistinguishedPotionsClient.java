@@ -1,5 +1,6 @@
 package fuzs.distinguishedpotions.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.distinguishedpotions.DistinguishedPotions;
 import fuzs.distinguishedpotions.client.handler.PotionDecorationsHandler;
 import fuzs.distinguishedpotions.config.ClientConfig;
@@ -35,12 +36,10 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
 
     @Override
     public void onRegisterItemDecorations(ItemDecorationContext context) {
-        context.registerItemDecorator((Font font, ItemStack stack, int itemPosX, int itemPosY, float blitOffset) -> {
+        context.registerItemDecorator((PoseStack poseStack, Font font, ItemStack stack, int itemPosX, int itemPosY) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).effectAmplifierBar) return false;
             if (PotionDecorationsHandler.renderPotionDecorations(stack, itemPosX, itemPosY)) {
-                if (DistinguishedPotions.CONFIG.get(ClientConfig.class).drawAmplifierBarBehindStackCount) {
-                    PotionDecorationsHandler.renderPotionStackSize(font, stack, itemPosX, itemPosY, blitOffset);
-                }
+                PotionDecorationsHandler.renderPotionStackSize(poseStack, font, stack, itemPosX, itemPosY);
                 return true;
             }
             return false;

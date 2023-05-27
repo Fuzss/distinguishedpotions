@@ -10,16 +10,12 @@ import net.minecraft.world.item.alchemy.Potion;
 import java.util.List;
 
 public class ClientConfig implements ConfigCore {
-    @Config(description = "Hides the enchantment glint on potions to make the potion effect color visible more easily.")
-    public boolean removePotionGlint = true;
     @Config(description = "Makes the bottle form and cork color of strong and long potions unique.")
     public boolean dedicatedPotionBottles = true;
     @Config(description = "Shows a bar similar to the item durability bar on potion items indicating the total amount of effect amplifier levels on the potion.")
     public boolean effectAmplifierBar = false;
     @Config(description = "Highlights strong and long potions directly in the potion name on the item tooltip.")
     public boolean extendedPotionNames = true;
-    @Config(description = "Draw the item stack count above the effect amplifier bar. Otherwise the bar is drawn last and may cover parts of the stack count.")
-    public boolean drawAmplifierBarBehindStackCount = true;
     @Config(name = "strong_potions", description = {"Potion types to be recognized as strong potions for providing alternate item textures.", ConfigDataSet.CONFIG_DESCRIPTION})
     List<String> strongPotionsRaw = Lists.newArrayList("*:strong_*");
     @Config(name = "long_potions", description = {"Potion types to be recognized as long potions for providing alternate item textures.", ConfigDataSet.CONFIG_DESCRIPTION})
