@@ -8,6 +8,7 @@ import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.ItemDecorationContext;
 import fuzs.puzzleslib.api.client.core.v1.context.ItemModelPropertiesContext;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,10 +37,10 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
 
     @Override
     public void onRegisterItemDecorations(ItemDecorationContext context) {
-        context.registerItemDecorator((PoseStack poseStack, Font font, ItemStack stack, int itemPosX, int itemPosY) -> {
+        context.registerItemDecorator((GuiGraphics guiGraphics, Font font, ItemStack stack, int itemPosX, int itemPosY) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).effectAmplifierBar) return false;
             if (PotionDecorationsHandler.renderPotionDecorations(stack, itemPosX, itemPosY)) {
-                PotionDecorationsHandler.renderPotionStackSize(poseStack, font, stack, itemPosX, itemPosY);
+                PotionDecorationsHandler.renderPotionStackSize(guiGraphics, font, stack, itemPosX, itemPosY);
                 return true;
             }
             return false;

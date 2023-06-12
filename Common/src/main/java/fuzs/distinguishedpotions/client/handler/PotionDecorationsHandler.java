@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -41,13 +42,13 @@ public class PotionDecorationsHandler {
         BufferUploader.drawWithShader(renderer.end());
     }
 
-    public static boolean renderPotionStackSize(PoseStack poseStack, Font font, ItemStack stack, int itemPosX, int itemPosY) {
+    public static boolean renderPotionStackSize(GuiGraphics guiGraphics, Font font, ItemStack stack, int itemPosX, int itemPosY) {
         // copied from vanilla ItemRenderer to draw stack count above effect amplifier bar
         if (stack.getCount() != 1) {
             String string = String.valueOf(stack.getCount());
-            poseStack.translate(0.0, 0.0, 200.0F);
+            guiGraphics.pose().translate(0.0, 0.0, 200.0F);
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-            font.drawInBatch(string, itemPosX + 19 - 2 - font.width(string), itemPosY + 6 + 3, 16777215, true, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+            font.drawInBatch(string, itemPosX + 19 - 2 - font.width(string), itemPosY + 6 + 3, 16777215, true, guiGraphics.pose().last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             bufferSource.endBatch();
             return true;
         }
