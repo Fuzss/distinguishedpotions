@@ -39,7 +39,7 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
     public void onRegisterItemDecorations(ItemDecorationContext context) {
         context.registerItemDecorator((GuiGraphics guiGraphics, Font font, ItemStack stack, int itemPosX, int itemPosY) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).effectAmplifierBar) return false;
-            if (PotionDecorationsHandler.renderPotionDecorations(stack, itemPosX, itemPosY)) {
+            if (PotionDecorationsHandler.renderPotionDecorations(guiGraphics, stack, itemPosX, itemPosY)) {
                 PotionDecorationsHandler.renderPotionStackSize(guiGraphics, font, stack, itemPosX, itemPosY);
                 return true;
             }
