@@ -1,12 +1,15 @@
 package fuzs.distinguishedpotions.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.distinguishedpotions.DistinguishedPotions;
 import fuzs.distinguishedpotions.client.handler.PotionDecorationsHandler;
 import fuzs.distinguishedpotions.config.ClientConfig;
+import fuzs.distinguishedpotions.data.client.DynamicModelProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
 import fuzs.puzzleslib.api.client.core.v1.context.ItemDecorationContext;
 import fuzs.puzzleslib.api.client.core.v1.context.ItemModelPropertiesContext;
+import fuzs.puzzleslib.api.core.v1.context.PackRepositorySourcesContext;
+import fuzs.puzzleslib.api.resources.v1.DynamicPackResources;
+import fuzs.puzzleslib.api.resources.v1.PackResourcesHelper;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -45,5 +48,11 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
             }
             return false;
         }, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.TIPPED_ARROW);
+    }
+
+    @Override
+    public void onAddResourcePackFinders(PackRepositorySourcesContext context) {
+        // use a generated pack for the vanilla potion item models overrides, when included normally with mod resource at least on Forge the pack rarely ends up below vanilla breaking the overrides
+        context.addRepositorySource(PackResourcesHelper.buildClientPack(DistinguishedPotions.id("potion_overrides"), DynamicPackResources.create(DynamicModelProvider::new), false));
     }
 }
