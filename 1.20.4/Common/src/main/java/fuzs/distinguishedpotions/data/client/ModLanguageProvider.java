@@ -11,7 +11,7 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
     }
 
     @Override
-    protected void addTranslations(TranslationBuilder builder) {
+    public void addTranslations(TranslationBuilder builder) {
         builder.add(PotionNameHandler.STRONG_POTION_TRANSLATION_KEY, "Strong %s");
         builder.add(PotionNameHandler.LONG_POTION_TRANSLATION_KEY, "Long %s");
     }

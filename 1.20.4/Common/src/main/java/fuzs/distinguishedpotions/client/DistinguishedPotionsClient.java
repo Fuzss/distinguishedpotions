@@ -21,17 +21,17 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 
 public class DistinguishedPotionsClient implements ClientModConstructor {
-    public static final ResourceLocation STRONG_POTION_MODEL_PROPERTY = DistinguishedPotions.id("strong");
-    public static final ResourceLocation LONG_POTION_MODEL_PROPERTY = DistinguishedPotions.id("long");
+    public static final ResourceLocation ITEM_MODEL_PROPERTY_STRONG = DistinguishedPotions.id("strong");
+    public static final ResourceLocation ITEM_MODEL_PROPERTY_LONG = DistinguishedPotions.id("long");
 
     @Override
     public void onRegisterItemModelProperties(ItemModelPropertiesContext context) {
-        context.registerItemProperty(STRONG_POTION_MODEL_PROPERTY, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
+        context.registerItemProperty(ITEM_MODEL_PROPERTY_STRONG, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).dedicatedPotionBottles) return 0.0F;
             Potion potion = PotionUtils.getPotion(itemStack);
             return DistinguishedPotions.CONFIG.get(ClientConfig.class).strongPotions.contains(potion) ? 1.0F : 0.0F;
         }, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);
-        context.registerItemProperty(LONG_POTION_MODEL_PROPERTY, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
+        context.registerItemProperty(ITEM_MODEL_PROPERTY_LONG, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).dedicatedPotionBottles) return 0.0F;
             Potion potion = PotionUtils.getPotion(itemStack);
             return DistinguishedPotions.CONFIG.get(ClientConfig.class).longPotions.contains(potion) ? 1.0F : 0.0F;
