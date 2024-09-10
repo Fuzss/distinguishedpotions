@@ -1,24 +1,24 @@
 package fuzs.distinguishedpotions.client.handler;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 
-import java.util.List;
+import java.util.stream.StreamSupport;
 
 public class PotionDecorationsHandler {
     private static final ChatFormatting[] POTION_AMPLIFIER_COLORS = new ChatFormatting[]{ChatFormatting.AQUA, ChatFormatting.LIGHT_PURPLE, ChatFormatting.GOLD, ChatFormatting.GREEN, ChatFormatting.YELLOW, ChatFormatting.BLUE, ChatFormatting.RED};
 
-    public static boolean renderPotionDecorations(GuiGraphics guiGraphics, ItemStack stack, int itemPosX, int itemPosY) {
-        List<MobEffectInstance> mobEffects = PotionUtils.getMobEffects(stack);
-        int dotCount = mobEffects.stream().mapToInt(MobEffectInstance::getAmplifier).map(i1 -> i1 + 1).sum();
+    public static boolean renderPotionDecorations(GuiGraphics guiGraphics, ItemStack itemStack, int itemPosX, int itemPosY) {
+        Iterable<MobEffectInstance> mobEffects = itemStack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getAllEffects();
+        int dotCount = StreamSupport.stream(mobEffects.spliterator(), false).mapToInt(MobEffectInstance::getAmplifier).map(
+                (int amplifierValue) -> amplifierValue + 1).sum();
         if (dotCount != 0) {
             int startX = itemPosX + 3;
             int startY = itemPosY + 13;

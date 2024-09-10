@@ -4,6 +4,8 @@ import com.google.gson.JsonElement;
 import fuzs.distinguishedpotions.DistinguishedPotions;
 import fuzs.distinguishedpotions.client.DistinguishedPotionsClient;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
+import fuzs.puzzleslib.api.client.data.v2.ItemModelProperties;
+import fuzs.puzzleslib.api.core.v1.utility.ResourceLocationHelper;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.data.models.ItemModelGenerators;
 import net.minecraft.data.models.model.ModelLocationUtils;
@@ -34,23 +36,21 @@ public class DynamicModelProvider extends AbstractModelProvider {
     }
 
     private static void generateVanillaPotionType(Item item, BiConsumer<ResourceLocation, Supplier<JsonElement>> modelOutput) {
-        ResourceLocation overlayLocation = decorateItemModelLocation(new ResourceLocation("potion_overlay"));
+        ResourceLocation overlayLocation = decorateItemModelLocation(ResourceLocationHelper.withDefaultNamespace("potion_overlay"));
         ResourceLocation potionLocation = ModelLocationUtils.getModelLocation(item);
         ModelTemplates.TWO_LAYERED_ITEM.create(potionLocation,
                 TextureMapping.layered(overlayLocation, potionLocation),
                 modelOutput,
-                overrides(ModelTemplates.TWO_LAYERED_ITEM,
+                ItemModelProperties.overridesFactory(ModelTemplates.TWO_LAYERED_ITEM,
                         createPotionOverride(potionLocation, DistinguishedPotionsClient.ITEM_MODEL_PROPERTY_STRONG),
                         createPotionOverride(potionLocation, DistinguishedPotionsClient.ITEM_MODEL_PROPERTY_LONG)
                 )
         );
     }
 
-    private static ItemOverride.Factory createPotionOverride(ResourceLocation vanillaModelLocation, ResourceLocation modelPropertyLocation) {
-        return $ -> {
-            ResourceLocation modelLocation = DistinguishedPotions.id(vanillaModelLocation.withSuffix("_" +
-                    modelPropertyLocation.getPath()).getPath());
-            return ItemOverride.of(modelLocation, modelPropertyLocation, 1.0F);
-        };
+    private static ItemModelProperties createPotionOverride(ResourceLocation vanillaModelLocation, ResourceLocation modelPropertyLocation) {
+        ResourceLocation modelLocation = DistinguishedPotions.id(vanillaModelLocation.withSuffix("_" +
+                modelPropertyLocation.getPath()).getPath());
+        return ItemModelProperties.singleOverride(modelLocation, modelPropertyLocation, 1.0F);
     }
 }

@@ -2,6 +2,7 @@ package fuzs.distinguishedpotions.client;
 
 import fuzs.distinguishedpotions.DistinguishedPotions;
 import fuzs.distinguishedpotions.client.handler.PotionDecorationsHandler;
+import fuzs.distinguishedpotions.client.handler.PotionNameHandler;
 import fuzs.distinguishedpotions.config.ClientConfig;
 import fuzs.distinguishedpotions.data.client.DynamicModelProvider;
 import fuzs.puzzleslib.api.client.core.v1.ClientModConstructor;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionUtils;
 
 public class DistinguishedPotionsClient implements ClientModConstructor {
     public static final ResourceLocation ITEM_MODEL_PROPERTY_STRONG = DistinguishedPotions.id("strong");
@@ -28,12 +28,12 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
     public void onRegisterItemModelProperties(ItemModelPropertiesContext context) {
         context.registerItemProperty(ITEM_MODEL_PROPERTY_STRONG, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).dedicatedPotionBottles) return 0.0F;
-            Potion potion = PotionUtils.getPotion(itemStack);
+            Potion potion = PotionNameHandler.getPotion(itemStack);
             return DistinguishedPotions.CONFIG.get(ClientConfig.class).strongPotions.contains(potion) ? 1.0F : 0.0F;
         }, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);
         context.registerItemProperty(ITEM_MODEL_PROPERTY_LONG, (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
             if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).dedicatedPotionBottles) return 0.0F;
-            Potion potion = PotionUtils.getPotion(itemStack);
+            Potion potion = PotionNameHandler.getPotion(itemStack);
             return DistinguishedPotions.CONFIG.get(ClientConfig.class).longPotions.contains(potion) ? 1.0F : 0.0F;
         }, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);
     }
