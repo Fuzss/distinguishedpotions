@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "distinguishedpotions:item/potion_overlay_long",
+    "layer1": "distinguishedpotions:item/splash_potion_long"
+  }
+}
