@@ -14,8 +14,8 @@ public class DistinguishedPotionsNeoForgeClient {
 
     public DistinguishedPotionsNeoForgeClient() {
         ClientModConstructor.construct(DistinguishedPotions.MOD_ID, DistinguishedPotionsClient::new);
-        DataProviderHelper.registerDataProviders(DistinguishedPotions.MOD_ID, ModLanguageProvider::new,
-                ModModelProvider::new
-        );
+        DataProviderHelper.registerDataProviders(DistinguishedPotions.MOD_ID,
+                ModLanguageProvider::new,
+                ModModelProvider::new);
     }
 }

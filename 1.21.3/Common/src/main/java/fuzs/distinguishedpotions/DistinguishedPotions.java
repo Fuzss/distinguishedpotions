@@ -14,7 +14,9 @@ public class DistinguishedPotions implements ModConstructor {
     public static final String MOD_NAME = "Distinguished Potions";
     public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
 
-    public static final ConfigHolder CONFIG = ConfigHolder.builder(MOD_ID).client(ClientConfig.class).common(CommonConfig.class);
+    public static final ConfigHolder CONFIG = ConfigHolder.builder(MOD_ID)
+            .client(ClientConfig.class)
+            .common(CommonConfig.class);
 
     public static ResourceLocation id(String path) {
         return ResourceLocationHelper.fromNamespaceAndPath(MOD_ID, path);

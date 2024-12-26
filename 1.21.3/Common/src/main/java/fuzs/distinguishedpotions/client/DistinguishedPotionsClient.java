@@ -18,6 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class DistinguishedPotionsClient implements ClientModConstructor {
     public static final ResourceLocation ITEM_MODEL_PROPERTY_STRONG = DistinguishedPotions.id("strong");
@@ -46,9 +47,7 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
                     return DistinguishedPotions.CONFIG.get(ClientConfig.class).strongPotions.contains(potion) ? 1.0F :
                             0.0F;
                 },
-                Items.POTION,
-                Items.SPLASH_POTION,
-                Items.LINGERING_POTION);
+                PotionItemModelHandler.POTION_ITEMS);
         context.registerItemProperty(ITEM_MODEL_PROPERTY_LONG,
                 (ItemStack itemStack, ClientLevel clientLevel, LivingEntity livingEntity, int i) -> {
                     if (!DistinguishedPotions.CONFIG.get(ClientConfig.class).dedicatedPotionBottles) return 0.0F;
@@ -56,9 +55,7 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
                     return DistinguishedPotions.CONFIG.get(ClientConfig.class).longPotions.contains(potion) ? 1.0F :
                             0.0F;
                 },
-                Items.POTION,
-                Items.SPLASH_POTION,
-                Items.LINGERING_POTION);
+                PotionItemModelHandler.POTION_ITEMS);
     }
 
     @Override
@@ -70,6 +67,6 @@ public class DistinguishedPotionsClient implements ClientModConstructor {
                 return true;
             }
             return false;
-        }, Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION, Items.TIPPED_ARROW);
+        }, ArrayUtils.add(PotionItemModelHandler.POTION_ITEMS, Items.TIPPED_ARROW));
     }
 }
