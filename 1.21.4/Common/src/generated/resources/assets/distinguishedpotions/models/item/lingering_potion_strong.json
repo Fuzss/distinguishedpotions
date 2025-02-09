@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "distinguishedpotions:item/potion_overlay_strong",
+    "layer1": "distinguishedpotions:item/lingering_potion_strong"
+  }
+}
