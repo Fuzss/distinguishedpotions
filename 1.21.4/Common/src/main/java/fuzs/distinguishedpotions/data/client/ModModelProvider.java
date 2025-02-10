@@ -1,14 +1,19 @@
 package fuzs.distinguishedpotions.data.client;
 
 import fuzs.distinguishedpotions.DistinguishedPotions;
-import fuzs.distinguishedpotions.client.DistinguishedPotionsClient;
+import fuzs.distinguishedpotions.client.renderer.item.properties.conditional.PotionType;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
-import net.minecraft.data.models.ItemModelGenerators;
-import net.minecraft.data.models.model.ModelLocationUtils;
+import net.minecraft.client.color.item.Potion;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+
+import java.util.function.UnaryOperator;
 
 public class ModModelProvider extends AbstractModelProvider {
 
@@ -17,23 +22,34 @@ public class ModModelProvider extends AbstractModelProvider {
     }
 
     @Override
-    public void addItemModels(ItemModelGenerators builder) {
-        generatePotionTypes(DistinguishedPotionsClient.ITEM_MODEL_PROPERTY_LONG, builder);
-        generatePotionTypes(DistinguishedPotionsClient.ITEM_MODEL_PROPERTY_STRONG, builder);
+    public void addItemModels(ItemModelGenerators itemModelGenerators) {
+        this.generatePotionType(Items.POTION, itemModelGenerators);
+        this.generatePotionType(Items.SPLASH_POTION, itemModelGenerators);
+        this.generatePotionType(Items.LINGERING_POTION, itemModelGenerators);
     }
 
-    private static void generatePotionTypes(ResourceLocation itemModelProperty, ItemModelGenerators builder) {
-        generatePotionType(Items.POTION, itemModelProperty, builder);
-        generatePotionType(Items.SPLASH_POTION, itemModelProperty, builder);
-        generatePotionType(Items.LINGERING_POTION, itemModelProperty, builder);
+    public final void generatePotionType(Item item, ItemModelGenerators itemModelGenerators) {
+        ItemModel.Unbaked standardModel = ItemModelUtils.tintedModel(ModelLocationHelper.getItemModel(item),
+                new Potion());
+        ItemModel.Unbaked longModel = this.createPotionType(item, (ResourceLocation resourceLocation) -> {
+            return DistinguishedPotions.id(resourceLocation.getPath()).withSuffix("_long");
+        }, itemModelGenerators);
+        ItemModel.Unbaked strongModel = this.createPotionType(item, (ResourceLocation resourceLocation) -> {
+            return DistinguishedPotions.id(resourceLocation.getPath()).withSuffix("_strong");
+        }, itemModelGenerators);
+        itemModelGenerators.itemModelOutput.accept(item,
+                ItemModelUtils.select(new PotionType(),
+                        standardModel,
+                        ItemModelUtils.when(PotionType.Type.LONG, longModel),
+                        ItemModelUtils.when(PotionType.Type.STRONG, strongModel)));
     }
 
-    private static void generatePotionType(Item item, ResourceLocation itemModelProperty, ItemModelGenerators builder) {
-        String suffix = "_" + itemModelProperty.getPath();
-        ResourceLocation potionLocation = DistinguishedPotions.id(ModelLocationUtils.getModelLocation(item, suffix)
-                .getPath());
-        ResourceLocation overlayLocation = decorateItemModelLocation(DistinguishedPotions.id("potion_overlay" +
-                suffix));
-        builder.generateLayeredItem(potionLocation, overlayLocation, potionLocation);
+    public final ItemModel.Unbaked createPotionType(Item item, UnaryOperator<ResourceLocation> operator, ItemModelGenerators itemModelGenerators) {
+        return ItemModelUtils.tintedModel(ItemModelGenerationHelper.createLayeredItemModel(operator.apply(
+                        ModelLocationHelper.getItemModel(item)),
+                ModelLocationHelper.getItemTexture(operator.apply(DistinguishedPotions.id("potion_overlay"))),
+                operator.apply(ModelLocationHelper.getItemTexture(item)),
+                ModelTemplates.TWO_LAYERED_ITEM,
+                itemModelGenerators.modelOutput), new Potion());
     }
 }
