@@ -3,6 +3,8 @@ package fuzs.distinguishedpotions.data.client;
 import fuzs.distinguishedpotions.DistinguishedPotions;
 import fuzs.distinguishedpotions.client.renderer.item.properties.conditional.PotionType;
 import fuzs.puzzleslib.api.client.data.v2.AbstractModelProvider;
+import fuzs.puzzleslib.api.client.data.v2.models.ItemModelGenerationHelper;
+import fuzs.puzzleslib.api.client.data.v2.models.ModelLocationHelper;
 import fuzs.puzzleslib.api.data.v2.core.DataProviderContext;
 import net.minecraft.client.color.item.Potion;
 import net.minecraft.client.data.models.ItemModelGenerators;

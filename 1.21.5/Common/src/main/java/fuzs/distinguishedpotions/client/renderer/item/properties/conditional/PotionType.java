@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 
 public record PotionType() implements SelectItemModelProperty<PotionType.Type> {
+    public static final Codec<Type> VALUE_CODEC = Type.CODEC;
     public static final SelectItemModelProperty.Type<PotionType, PotionType.Type> TYPE = SelectItemModelProperty.Type.create(
             MapCodec.unit(new PotionType()),
             PotionType.Type.CODEC);
@@ -35,6 +36,11 @@ public record PotionType() implements SelectItemModelProperty<PotionType.Type> {
         }
 
         return Type.STANDARD;
+    }
+
+    @Override
+    public Codec<Type> valueCodec() {
+        return VALUE_CODEC;
     }
 
     @Override
