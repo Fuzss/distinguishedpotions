@@ -1,0 +1,44 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "distinguishedpotions:item/potion_long",
+          "tints": [
+            {
+              "type": "minecraft:potion",
+              "default": -13083194
+            }
+          ]
+        },
+        "when": "long"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "distinguishedpotions:item/potion_strong",
+          "tints": [
+            {
+              "type": "minecraft:potion",
+              "default": -13083194
+            }
+          ]
+        },
+        "when": "strong"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/potion",
+      "tints": [
+        {
+          "type": "minecraft:potion",
+          "default": -13083194
+        }
+      ]
+    },
+    "property": "distinguishedpotions:potion_type"
+  }
+}
